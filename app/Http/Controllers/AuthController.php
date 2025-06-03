@@ -49,6 +49,9 @@ class AuthController extends Controller
 
         Auth::user();
 
+        if (Auth::user()->role_id == 2) {
+            return redirect('/admin')->with('success', 'Успешный вход');
+        }
         return redirect('/profile')->with('success', 'Успешный вход');
     }
 
