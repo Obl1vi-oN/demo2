@@ -28,7 +28,7 @@ class ApplicationController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('profile', compact( 'items', 'user'));
+        return view('main', compact( 'items', 'user'));
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class ApplicationController extends Controller
             'status_id' => 1,
         ]);
 
-        return redirect('/profile')->with('success', 'Успешное добавление');
+        return redirect('/')->with('success', 'Успешное добавление');
     }
     public function review(Request $request, $id)
     {
@@ -63,9 +63,9 @@ class ApplicationController extends Controller
                 'review' => $request->review
             ]);
 
-            return redirect('/profile')->with('success', 'Успешное добавление');
+            return redirect('/')->with('success', 'Успешное добавление');
         } else {
-            return redirect('/profile')->with('error', 'Ошибка');
+            return redirect('/')->with('error', 'Ошибка');
         }
     }
 }

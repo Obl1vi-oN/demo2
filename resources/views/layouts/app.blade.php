@@ -20,21 +20,10 @@
             <ul class="header-menu">
 
                 @auth
+                    @if(auth()->user()->role_id == 1)
                     <li>
                         <a href="/create" class="btn create-btn">Создать заявку</a>
                     </li>
-                    @if(auth()->user()->role_id == 2)
-                    <li>
-                        <a href="/admin">
-                            <img src="{{asset('images/profile.svg')}}" alt="Profile" class="icon">
-                        </a>
-                    </li>
-                    @else
-                        <li>
-                            <a href="/profile">
-                                <img src="{{asset('images/profile.svg')}}" alt="Profile" class="icon">
-                            </a>
-                        </li>
                     @endif
                     <li>
                         <form action="{{ route('logout') }}" method="POST" class="logout">

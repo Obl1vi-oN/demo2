@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('main'); });
+Route::get('/', function () {
+    $user = Auth::user();
+
+    if ($user->role_id === 2) {
+        return redirect()->route('admin');
+    }
+
+    return redirect()->route('profile');
+})->middleware('auth');
 
 Route::get('/login', [AuthController::class, 'loginView']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -27,7 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/create', [ApplicationController::class, 'createView'])->middleware('auth')->name('create');
 Route::post('/create/store', [ApplicationController::class, 'store'])->name('store')->middleware('auth');
 
-Route::get('/profile', [ApplicationController::class, 'index'])->middleware('auth');
+Route::get('/profile', [ApplicationController::class, 'index'])->middleware('auth')->name('profile');
 Route::put('/review/create/{id}', [ApplicationController::class, 'review'])->middleware('auth')->name('review');
 
 Route::get('/admin', [AdminController::class, 'index'])->middleware('admin')->name('admin');
